@@ -40,9 +40,12 @@ JFinal 是基于 Java 语言的极速 WEB + ORM 框架，其核心设计目标�
 
 3. [Controller](3.Controller.md)
 
-
 4. [AOP](4.AOP.md)
 
 5. [ActiveRecord](5.ActiveRecord.md)
 
 6. [Enjoy模板引擎](6.Enjoy模板引擎.md)
+
+7. [EhCachePlugin](7.EhCachePlugin.md)
+
+8. [RedisPlugin](8.RedisPlugin.md)
