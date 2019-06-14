@@ -48,10 +48,9 @@ _, err := Db.Exec("delete from person where user_id=?", 1)
 package main
 
 import (
-	"fmt"
-
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
+	"fmt"
 )
 
 type Person struct {
@@ -70,15 +69,16 @@ type Place struct {
 var Db *sqlx.DB
 
 func init() {
-	database, err := sqlx.Open("mysql", "root:root@tcp(127.0.0.1:3306)/test")
+	database, err := sqlx.Open("mysql", "root:123456@tcp(127.0.0.1:3306)/test_beetl")
 	if err != nil {
-		fmt.Println("open mysql failed,", err)
+		fmt.Println("open mysql failed: ", err)
 		return
 	}
 	Db = database
 }
 
 func main() {
+	//添加
 	r, err := Db.Exec("insert into person(username, sex, email)values(?, ?, ?)", "stu001", "man", "stu01@qq.com")
 	if err != nil {
 		fmt.Println("exec failed, ", err)
@@ -91,5 +91,30 @@ func main() {
 	}
 
 	fmt.Println("insert succ:", id)
+
+	//查找
+	var person []Person
+	err := Db.Select(&person, "select * from person where user_id = ?", 2)
+	if err != nil {
+		fmt.Println("exec failed: ", err)
+		return
+	}
+
+	fmt.Println("selelct success : ", person)
+
+	//修改
+	_, err := Db.Exec("update person set username = ? where user_id=?", "zhangsan", 2)
+	if err != nil {
+		fmt.Println("exec failed: ", err)
+		return
+	}
+
+	//删除
+	_, err := Db.Exec("delete from person where user_id = ?", 1)
+	if err != nil {
+		fmt.Println("exec failed: ", err)
+		return
+	}
+	fmt.Println("delete success")
 }
 ```

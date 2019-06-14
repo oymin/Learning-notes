@@ -19,22 +19,17 @@ beego 是基于这些模块构建的，那么他的执行逻辑是怎么样的�
 一般的 beego 项目的目录如下所示：
 
 ```
-├── conf
-│   └── app.conf   
-├── controllers (C)
-│   ├── admin
-│   └── default.go
-├── main.go (入口文件)
-├── models  (M)
-│   └── models.go
-├── static
-│   ├── css
-│   ├── ico
-│   ├── img
-│   └── js
-└── views  (V)
-    ├── admin
-    └── index.tpl
+  ├─conf        配置
+  ├─controllers 控制层(C)
+  ├── main.go   入口文件
+  ├─models      模型层(M)
+  ├─routers     路由
+  ├─static      静态资源
+  │  ├─css
+  │  ├─img
+  │  └─js
+  ├─tests       测试
+  └─views       视图层(V)
 ```
 
 ---
@@ -87,11 +82,23 @@ bee new myproject
 bee api apiproject
 ```
 
+> api 项目结构
+
+```
+├─conf
+├─controllers
+├─models
+├─routers
+└─tests
+```
+
 ---
 
 ### 2.4 run 命令
 
 我们在开发 Go 项目的时候最大的问题是经常需要自己手动去编译再运行，`bee run` 命令是监控 beego 的项目，通过 fsnotify 监控文件系统
+
+> 在 beego 项目的目录下执行此命令
 
 ```
 bee run
@@ -480,14 +487,153 @@ model c  v
 
 - 使用 `$` 来引用当前模板根级的上下文
 
+**简单的例子：**
+
+> 路由 router.go
+
 ```
-c["aaaa"] =15
+package routers
 
-{{.aaaa}}
+import (
+  "mybeeproject/controllers"
+  "github.com/astaxie/beego"
+  _ "github.com/go-sql-driver/mysql"
+)
 
-
-for i in .aaaa
-$i
-
-curl
+func init() {
+  beego.Router("/", &controllers.MainController{}, "get:GET;post:Test")
+  beego.Router("/test/user", &controllers.TestUserController{}, "get:Get;post:Post")
+}
 ```
+
+> 控制层 controllers
+
+```
+package controllers
+
+import (
+  "github.com/astaxie/beego"
+	"mybeeproject/models"
+)
+
+type TestUserController struct {
+  beego.Controller
+}
+
+func (c *TestUserController) Get() {
+  //添加对象
+  //user := models.User{Name:"wangwu",Phone:"13955139999",Age:25,Sex:"男"}
+  //models.AddUser(&user)
+  //c.Ctx.WriteString("call model success")
+
+  //获取所有 user 对象信息
+  var users []models.User
+  models.ReadUser(&users)
+
+  c.Data["Title"] = "获取所有user信息"
+  c.Data["Users"] = Users
+  c.Data["len"]   = len(users)
+
+  c.TplName = "test.tpl"
+}
+```
+
+> model层
+
+```
+package models
+
+import (
+	"github.com/astaxie/beego/orm"     //操作数据库
+	_ "github.com/go-sql-driver/mysql" //mysql 驱动
+)
+
+var (
+  db orm.Ormer
+)
+
+type User struct {
+	Id    int64
+	Name  string
+	Phone string
+	Age   int
+	Sex   string
+}
+
+func init() {
+	orm.Debug = true //是否开启调试模式，调试模式下会打印出sql语句
+	orm.RegisterDataBase("default", "mysql", "root:123456@tcp(127.0.0.1:3306)/test1?charset=utf8", 30)
+	// register model
+	orm.RegisterModel(new(User)) //创建一个user_info表 UserInfo
+	db = orm.NewOrm()
+}
+
+//添加一个对象
+func AddUser(user *User) (int64, error) {
+	id, err := db.Insert(user)
+	return id, err
+}
+
+//读取
+func ReadUser(users *[]User) {
+	qb, _ := orm.NewQueryBuilder("mysql")
+	qb.Select("*").From("user")
+	sql := qb.String()
+	db.Raw(sql).QueryRows(users)
+}
+```
+
+> 视图层 View
+
+```
+<html>
+<header>
+    <title>{{.Title}}</title>
+</header>
+<body>
+    {{.Appname}} <br>
+    {{range .Users}}
+            {{.Name}} -- {{$.len}}<br>
+            {{.Phone}} <br>
+            {{.Age}} <br>
+    {{end}}
+</body>
+</html>
+```
+
+> 运行项目，访问的结果
+
+![](../images/img22.jpg)
+
+---
+
+## 6. beego 的 config 模块
+
+1）首先初始化一个解析器对象
+
+```
+iniconf, err := NewConfig("ini", "testini.conf")
+if err != nil {
+    t.Fatal(err)
+}
+```
+
+2）然后通过对象获取数据
+
+```
+iniconf.String("appname")
+```
+
+##### 解析器对象支持的函数有如下：
+
+```
+Set(key, val string) error
+String(key string) string
+Int(key string) (int, error)
+Int64(key string) (int64, error)
+Bool(key string) (bool, error)
+Float(key string) (float64, error)
+DIY(key string) (interface{}, error)
+```
+
+---
