@@ -9,3 +9,7 @@
 4. [SpringBoot整合Mybatis](docs/SpringBoot整合Mybatis.md)
 
 5. [SpringBoot整合Redis](docs/SpringBoot整合Redis.md)
+
+6. [SpringBoot整合Spring Data MongoDB](docs/SpringBoot整合SpringDataMongoDB.md)
+
+7. [SpringBoot整合Freemarker](docs/SpringBoot整合Freemarker.md)
