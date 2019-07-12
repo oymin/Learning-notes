@@ -12,4 +12,8 @@
 
 6. [SpringBoot整合Spring Data MongoDB](docs/SpringBoot整合SpringDataMongoDB.md)
 
-7. [SpringBoot整合Freemarker](docs/SpringBoot整合Freemarker.md)
+7. [SpringBoot整合MongoDB GridFS](docs/SpringBoot整合MongoDB_GridFS.md)
+
+8. [SpringBoot整合Freemarker](docs/SpringBoot整合Freemarker.md)
+
+9. [SpringBoot整合RabbitMQ](docs/SpringBoot整合RabbitMQ.md)

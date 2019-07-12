@@ -211,3 +211,55 @@ public class FreemarkerTest {
         fileOutputStream.close();
     }
 ```
+
+## 页面静态化
+
+### 远程接口请求
+
+SpringMVC 提供 `RestTemplate` 请求 http 接口，`RestTemplate` 的底层可以使用第三方的 http 客户端工具实现 http 的请求，常用的 http 客户端工具有 Apache HttpClient、OkHttpClient 等，本项目使用 `OkHttpClient` 完成 http 请求，原因也是因为它的性能比较出众。
+
+1、添加依赖
+
+```xml
+<dependency>
+    <groupId>com.squareup.okhttp3</groupId>
+    <artifactId>okhttp</artifactId>
+</dependency>
+```
+
+2. 配置 RestTemplate
+
+在 SpringBoot 启动类中配置 RestTemplate
+
+```java
+@SpringBootApplication
+@EntityScan("com.koax.framework.domain.cms")//扫描实体类
+@ComponentScan(basePackages={"com.koax.api"})//扫描接口
+@ComponentScan(basePackages={"com.koax.manage_cms"})//扫描本项目下的所有类
+public class ManageCmsApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(ManageCmsApplication.class,args);
+    }
+
+    //配置 RestTemplate
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate(new OkHttp3ClientHttpRequestFactory());
+    }
+}
+```
+
+3、测试 RestTemplate
+
+根据 url 获取数据，并转为 map 格式
+
+```java
+@Test
+public void testRestTemplate(){
+    ResponseEntity<Map> forEntity = restTemplate.getForEntity("http://localhost:31001/cms/config/get/5a791725dd573c3574ee333f",Map.class);
+    Map body = forEntity.getBody();
+
+    System.out.println(forEntity);
+    System.err.println(body);
+}
+```
