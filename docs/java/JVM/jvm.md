@@ -29,10 +29,11 @@
   - 弱引用
   
 ## JVM 运行机制
-  - [JVM 启动流程](#id-section1)
-  - [JVM 基本结构](#id-section2)
-  - [内存模型](#id-section3)
-  - 编译和解释运行的概念
+
+- [JVM 启动流程](#id-section1)
+- [JVM 基本结构](#id-section2)
+- [内存模型](#id-section3)
+- 编译和解释运行的概念
 
 ### JVM 启动流程
 <div id='id-section1'/>
