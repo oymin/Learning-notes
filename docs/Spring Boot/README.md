@@ -17,3 +17,5 @@
 8. [SpringBoot整合Freemarker](docs/SpringBoot整合Freemarker.md)
 
 9. [SpringBoot整合RabbitMQ](docs/SpringBoot整合RabbitMQ.md)
+
+10. [SpringBoot整合Mybatis逆向工程](docs/SpringBoot整合Mybatis逆向工程.md)
