@@ -427,7 +427,7 @@ http {
 	server {
 
 	  listen 80;
-	  server_name 192.168.101.65;;
+	  server_name 192.168.101.65;
 	  location /group1/M00/ {
 		root /home/FastDFS/fdfs_storage/data;
 		ngx_fastdfs_module;
@@ -466,62 +466,65 @@ nginx 对外由 vip 提供服务，使用域名访问如下：
 
 比如 vip 对应的域名为 img.test.com：http://img.test.com/group1/M00/00/00/wKhlBVVY2M-AM_9DAAAT7-0xdqM485_big.png
 
-### 2.5 Nginx 代理
+## 3. 门户安装 Nginx 代理
 
-本机中安装。
+本机中安装。门户图片服务虚拟主机的作用是负载均衡，将图片请求转发到 storage server 上。
 
 单独安装 nginx 代理服务，它的作用是代理访问 storage 上的文件，实现负载均衡。nginx 的安装细节参考 nginx 文档，这里使用单机 nginx，也可以使用两台 nginx 组成高可用或者采用 lvs+nginx 访问 Storage 上的 nginx。
 
-#### 2.5.1 创建 nginx-fdfs.conf 配置文件
+通过图片服务虚拟主机请求图片流程图：
+
+![jpg](../images/05.jpg)
+
+### 在 nginx 图片代理服务上配置图片服务器虚拟主机
+
+`nginx.conf` 文件中加入如下内容：
 
 ```bash
-
-#user  nobody;
-worker_processes  1;
-
-
-events {
-    worker_connections  1024;
+#storage 群 group1 组
+upstream storage_server_group1 {
+	server 192.168.75.128:80 weight=10;
+	server 192.168.101.6:80 weight=10;
 }
 
-http {
-    include       mime.types;
-    default_type  application/octet-stream;
-    sendfile        on;
-    keepalive_timeout  65;
-
-	#storage 群 group1 组
-	upstream storage_server_group1 {
-		server 192.168.75.128:80 weight=10;
-		server 192.168.101.6:80 weight=10;
-	}
-
-	#storage 群 group2 组
-	upstream storage_server_group2 {
-		server 192.168.75.128:80 weight=10;
-		server 192.168.101.8:80 weight=10;
-	}
-
-    server {
-		listen 80;
-		server_name ccc.test.com;
-		location /group1 {
-			proxy_redirect off;
-			proxy_set_header Host $host;
-			proxy_set_header X-Real-IP $remote_addr;
-			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-			proxy_pass http://storage_server_group1;
-		}
-		
-		location /group2 {
-			proxy_redirect off;
-			proxy_set_header Host $host;
-			proxy_set_header X-Real-IP $remote_addr;
-			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-			proxy_pass http://storage_server_group2;
-		}
-
-	}
-
+#storage 群 group2 组
+upstream storage_server_group2 {
+	server 192.168.75.129:80 weight=10;
+	server 192.168.101.8:80 weight=10;
 }
+
+server {
+	listen 80;
+	server_name ccc.test.com;
+
+	location /group1 {
+		proxy_redirect off;
+		proxy_set_header Host $host;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		proxy_pass http://storage_server_group1;
+	}
+
+	location /group2 {
+		proxy_redirect off;
+		proxy_set_header Host $host;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		proxy_pass http://storage_server_group2;
+	}
+}
+```
+
+## 创建快速启动脚本
+
+```bash
+vi fastdfs-start.sh
+```
+
+脚本内容：
+
+```bash
+sudo /usr/bin/fdfs_trackerd /etc/fdfs/tracker.conf restart
+sudo /usr/bin/fdfs_storaged /etc/fdfs/storage.conf restart
+sudo /usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx-fdfs.conf
 ```
