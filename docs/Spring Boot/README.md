@@ -19,3 +19,5 @@
 9. [SpringBoot整合RabbitMQ](docs/SpringBoot整合RabbitMQ.md)
 
 10. [SpringBoot整合Mybatis逆向工程](docs/SpringBoot整合Mybatis逆向工程.md)
+
+11. [SpringBoot整合Eureka注册中心](docs/SpringBoot整合Eureka注册中心.md)
