@@ -24,6 +24,14 @@ ruby -v
 ruby 2.5.5p157 (2019-03-15 revision 67260) [x64-mingw32]
 ```
 
+### 2.2 安装 logstash-input-jdbc
+
+DOS 模式中在 `logstash/bin` 目录下执行命令：
+
+```bash
+.\logstash-plugin.bat install logstash-input-jdbc
+```
+
 安装完成后可在 logstash 目录下查看对应的插件版本：
 
 `logstash-6.4.1\vendor\bundle\jruby\2.3.0\gems\logstash-input-jdbc-4.3.13`
