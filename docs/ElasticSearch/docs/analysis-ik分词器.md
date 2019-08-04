@@ -6,7 +6,7 @@
 
 下载 IK 分词器.zip：（Github地址：[https://github.com/medcl/elasticsearch-analysis-ik](https://github.com/medcl/elasticsearch-analysis-ik)）
 
-![image](..\images\04.png)
+![image](../images/04.png)
 
 ## 2. elasticsearch 5.x以上版本
 

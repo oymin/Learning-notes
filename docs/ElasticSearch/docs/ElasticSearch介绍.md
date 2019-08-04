@@ -18,7 +18,7 @@ Elasticsearch 使用 Lucene，并试图通过 JSON 和 Java API 提供其所有�
 
 下图是 ElasticSearch 的索引结构，下边黑色部分是物理结构，上边黄色部分是逻辑结构，逻辑结构也是为了更好的描述 ElasticSearch 的工作原理及去使用物理结构中的索引文件。
 
-![jpg](..\images\01.jpg)
+![jpg](../images/01.jpg)
 
 逻辑结构部分是一个倒排索引表：
 

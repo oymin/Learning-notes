@@ -46,15 +46,15 @@ grunt -version
 
 ### 2.1 解压后在根目录dos模式下执行 cnpm install 命令安装插件
 
-![image](..\images\01.png)
+![image](../images/01.png)
 
 ### 2.2 安装完成，执行 grunt server 或者 npm run start 命令启动 head
 
-![image](..\images\02.png)
+![image](../images/02.png)
 
 ### 2.3 可以修改 Gruntfile.js 文件修改 head 的配置
 
-![image](..\images\03.png)
+![image](../images/03.png)
 
 ### 2.4 安装方法-2
 
