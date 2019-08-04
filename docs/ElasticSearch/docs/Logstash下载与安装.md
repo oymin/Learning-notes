@@ -143,53 +143,52 @@ Logstash 的工作是从 MySQL 中读取数据，向 ES 中创建索引，这里
 
 ```yml
 input {
-  stdin {
-  }
-  jdbc {
-	  jdbc_connection_string => "jdbc:mysql://localhost:3306/xc_course?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC"
+	stdin {
+	}
+	jdbc {
+		jdbc_connection_string => "jdbc:mysql://localhost:3306/xc_course?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC"
 
-	  # the user we wish to excute our statement as
-	  jdbc_user => "root"
-	  jdbc_password => root
+		# the user we wish to excute our statement as
+		jdbc_user => "root"
+		jdbc_password => root
 
-	  # the path to our downloaded jdbc driver  
-	  jdbc_driver_library => "D:/Maven3/repository/mysql/mysql-connector-java/5.1.37/mysql-connector-java-5.1.37.jar"
+		# the path to our downloaded jdbc driver  
+		jdbc_driver_library => "D:/Maven3/repository/mysql/mysql-connector-java/5.1.37/mysql-connector-java-5.1.37.jar"
 
-	  # the name of the driver class for mysql
-	  jdbc_driver_class => "com.mysql.jdbc.Driver"
-	  jdbc_paging_enabled => "true"
-	  jdbc_page_size => "50000"
+		# the name of the driver class for mysql
+		jdbc_driver_class => "com.mysql.jdbc.Driver"
+		jdbc_paging_enabled => "true"
+		jdbc_page_size => "50000"
 
-	  #要执行的sql文件
-	  #statement_filepath => "/conf/course.sql"
-	  statement => "select * from course_pub where timestamp > date_add(:sql_last_value,INTERVAL 8 HOUR)"
+		#要执行的sql文件
+		#statement_filepath => "/conf/course.sql"
+		statement => "select * from course_pub where timestamp > date_add(:sql_last_value,INTERVAL 8 HOUR)"
 
-	  #定时配置
-	  schedule => "* * * * *"
-	  record_last_run => true
-	  last_run_metadata_path => "D:/Develop2/logstash-6.4.1/config/logstash_metadata"
-  }
+		#定时配置
+		schedule => "* * * * *"
+		record_last_run => true
+		last_run_metadata_path => "D:/Develop2/logstash-6.4.1/config/logstash_metadata"
+	}
 }
 
-
 output {
-  elasticsearch {
-	  #ES的ip地址和端口
-	  hosts => "localhost:9200"
-	  #hosts => ["localhost:9200","localhost:9202","localhost:9203"]
+	elasticsearch {
+		#ES的ip地址和端口
+		hosts => "localhost:9200"
+		#hosts => ["localhost:9200","localhost:9202","localhost:9203"]
 
-	  #ES索引库名称
-	  index => "xc_course"
-	  document_id => "%{id}"
-	  document_type => "doc"
-	  template =>"D:/Develop2/logstash-6.4.1/config/xc_course_template.json"
-	  template_name =>"xc_course"
-	  template_overwrite =>"true"
-  }
-  stdout {
-	#日志输出
-	codec => json_lines
-  }
+		#ES索引库名称
+		index => "xc_course"
+		document_id => "%{id}"
+		document_type => "doc"
+		template =>"D:/Develop2/logstash-6.4.1/config/xc_course_template.json"
+		template_name =>"xc_course"
+		template_overwrite =>"true"
+	}
+	stdout {
+		#日志输出
+		codec => json_lines
+	}
 }
 ```
 
