@@ -32,7 +32,7 @@ DOS 模式中在 `logstash/bin` 目录下执行命令：
 .\logstash-plugin.bat install logstash-input-jdbc
 ```
 
-安装完成后可在 logstash 目录下查看对应的插件版本：
+安装完成后可在 logstash 对应目录下查看对应的插件版本：
 
 `logstash-6.4.1\vendor\bundle\jruby\2.3.0\gems\logstash-input-jdbc-4.3.13`
 
