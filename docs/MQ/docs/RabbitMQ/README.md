@@ -1,22 +1,22 @@
 # RabbitMQ 学习目录
 
-1. [RabbitMQ介绍](1_RabbitMQ介绍.md)
+1. [RabbitMQ介绍](01_RabbitMQ介绍.md)
 
-2. [RabbitMQ的安装](2_RabbitMQ的安装.md)
+2. [RabbitMQ的安装](02_RabbitMQ的安装.md)
 
-3. [RabbitMQ的初始环境搭建](3_RabbitMQ的初始环境搭建.md)
+3. [RabbitMQ的初始环境搭建](03_RabbitMQ的初始环境搭建.md)
 
-4. [Work Queues工作队列模式](4_WorkQueues工作队列模式.md)
+4. [Work Queues工作队列模式](04_WorkQueues工作队列模式.md)
 
-5. [Publish/subscribe发布订阅模式](5_Publish/subscribe发布订阅模式.md)
+5. [Publish/subscribe发布订阅模式](05_Publish/subscribe发布订阅模式.md)
 
-6. [Routing路由模式](6_Routing路由模式.md)
+6. [Routing路由模式](06_Routing路由模式.md)
 
-7. [Topic话题路由模式](7_话题路由模式.md)
+7. [Topic话题路由模式](07_话题路由模式.md)
 
-8. [RabbitMQ之消息确认机制](8_RabbitMQ之消息确认机制.md)
+8. [RabbitMQ之消息确认机制](08_RabbitMQ之消息确认机制.md)
 
-9. [@RabbitListener注解消费消息](9_@RabbitListener注解消费消息.md)
+9. [@RabbitListener注解消费消息](09_@RabbitListener注解消费消息.md)
 
 10. [MessageConverter详解](10_MessageConverter详解.md)
 
