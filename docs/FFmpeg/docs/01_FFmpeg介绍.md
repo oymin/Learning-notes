@@ -6,7 +6,7 @@ FFmpeg 在 Linux 平台下开发，但它同样也可以在其它操作系统环
 
 FFmpeg 被许多开源项目采用，QQ 影音、暴风影音、VLC 等。
 
-windows下载地址：[https://ffmpeg.zeranoe.com/builds/win64/static/ffmpeg-20190805-5ac28e9-win64-static.zip](https://ffmpeg.zeranoe.com/builds/win64/static/ffmpeg-20190805-5ac28e9-win64-static.zip)
+Windows下载地址：[https://ffmpeg.zeranoe.com/builds/win64/static/ffmpeg-20190805-5ac28e9-win64-static.zip](https://ffmpeg.zeranoe.com/builds/win64/static/ffmpeg-20190805-5ac28e9-win64-static.zip)
 
 ---
 
@@ -83,7 +83,7 @@ ffmpeg -i lucene.mp4 -hls_time 10 -hls_list_size 0 -hls_segment_filename ./hls/l
 
 ## 码率的设置
 
-码率又叫比特率即每秒传输的 bit 数，单位为 bps(Bit Per Second)，码率越大传送数据的速度越快。
+码率又叫比特率即每秒传输的 bit 数，单位为 bps (Bit Per Second)，码率越大传送数据的速度越快。
 
 码率的计算公式是：`文件大小（转成bit）/ 时长（秒）/1024 = kbps` 即每秒传输千位数
 
