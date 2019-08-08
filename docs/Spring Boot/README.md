@@ -21,3 +21,5 @@
 10. [SpringBoot整合Mybatis逆向工程](docs/SpringBoot整合Mybatis逆向工程.md)
 
 11. [SpringBoot整合Eureka注册中心](docs/SpringBoot整合Eureka注册中心.md)
+
+12. [SpringBoot整合ElasticSearch](docs/SpringBoot整合ElasticSearch.md)

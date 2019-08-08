@@ -33,6 +33,18 @@ ffmpeg - version
 
 ## FFmpeg 基本使用
 
+简单的测试：
+
+将一个 .avi 文件转成 mp4、mp3、gif 等。
+
+```yml
+ffmpeg -i lucene.avi lucene.mp4
+
+ffmpeg -i lucene.avi lucene.mp3
+
+ffmpeg -i lucene.avi lucene.gif
+```
+
 ### 生成 m3u8 、ts 文件
 
 #### 1、cmd 输入命令将 `.avi` 视频转换成 `mpt`
@@ -80,16 +92,3 @@ ffmpeg -i lucene.mp4 -hls_time 10 -hls_list_size 0 -hls_segment_filename ./hls/l
 ```text
 1*1024*1024*8/10/1024 = 819 kbps
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
