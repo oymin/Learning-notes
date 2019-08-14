@@ -29,3 +29,5 @@
 14. [SpringBoot整合AOP实现系统操作日志记录存储到数据库](docs/SpringBoot整合AOP实现系统操作日志记录存储到数据库.md)
 
 15. [SpringBoot整合Quartz](docs/SpringBoot整合Quartz.md)
+
+16. [SpringBoot整合JPA实现多数据源](docs/SpringBoot整合JPA实现多数据源.md)
