@@ -130,3 +130,49 @@ public enum ErrorEnum {
 ```
 
 ---
+
+## 方式二：@ControllerAdvice 控制器增强
+
+```java
+/**
+ * 统一错误处理
+ */
+//@RestControllerAdvice(basePackages = {"com.koax.manager"})
+@ControllerAdvice //控制器增强
+public class ErrorControllerAdvice {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ErrorControllerAdvice.class);
+
+    //自定义抛出异常
+    @ExceptionHandler(CustomException.class)
+    @ResponseBody
+    public ResponseEntity customException(CustomException e) {
+        Map<String, Object> attrMap = new HashMap<>();
+        attrMap.put("message", e.getMessage());
+        attrMap.put("code", e.getCode());
+        attrMap.put("success", e.isSuccess());
+        attrMap.put("status", e.getHttpStatus().value());
+        return new ResponseEntity(attrMap, e.getHttpStatus());
+    }
+
+    //捕获非自定义异常
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    public ResponseEntity handleException(Exception e) {
+        Map<String, Object> attrMap = new HashMap<>();
+        String errorCode = e.getMessage();
+        ErrorEnum errorEnum = ErrorEnum.getByCode(errorCode);
+
+        if (errorEnum == null){
+            errorEnum = ErrorEnum.UNKNOWN;
+            attrMap.put("message", errorCode);
+        }else {
+            attrMap.put("message", errorEnum.getMessage());
+        }
+        attrMap.put("code", errorEnum.getCode());
+        attrMap.put("success", errorEnum.isSuccess());
+        attrMap.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        return new ResponseEntity(attrMap, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+}
+```
