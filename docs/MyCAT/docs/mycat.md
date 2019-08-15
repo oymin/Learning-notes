@@ -92,7 +92,15 @@ adduser mycat
 chown mycat:mycat -R mycat/
 ```
 
-- 配置系统环境遍历
+- 配置系统环境变量
+
+```bash
+#修改文件
+vi /etc/profile
+
+#添加内容
+MYCAT_HOME=/usr/local/mycat
+```
 
 - 修改 MyCAT 启动参数
 
