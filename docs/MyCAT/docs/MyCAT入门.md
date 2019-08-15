@@ -108,15 +108,23 @@ vi /etc/profile
 
 #添加内容
 export MYCAT_HOME=/usr/local/mycat
+
+#将 $MYCAT_HOME/bin 添加到 PATH 上
+PATH=$PATH:$JAVA_HOME/bin:$MYCAT_HOME/bin
+
+#保存退出，重新加载配置
+source /etc/profile
 ```
 
 #### 4.5 启动MyCAT
+
+启动方式一：
 
 ```bash
 #切换到 mycat 用户
 su -mycat
 
-#执行启动脚本 bin 目录下
+#执行启动脚本 mycat/bin/ 目录下
 startup_nowrap.sh
 ```
 
@@ -126,19 +134,35 @@ startup_nowrap.sh
 JAVA_OPTS="-server -Xms1G -Xmx2G -XX:MaxPermSize=64M -XX:+AggressiveOpts -XX:MaxDirectMemorySize=2G"
 ```
 
+启动方式二：
 
+首先查看 linux 的内存大小
 
+```shell
+free im
+```
 
+查看到 `Men` 内存大小为 `997924` kb (1G左右)
 
+```yml
+              total        used        free      shared  buff/cache   available
+Mem:         997924      307708      435776        7892      254440      502696
+Swap:       2097148           0     2097148
+```
 
+修改 `mycat/conf/wrapper.conf` 文件
 
+```yml
+#内存默认值是2G，此处修改成400M
+wrapper.java.additional.5=-XX:MaxDirectMemorySize=400M
+```
 
+启动：
 
-
-
-
-
-
+```bash
+# 使用 mycat/bin/ 目录下 mycat 命令
+mycat start
+```
 
 
 
