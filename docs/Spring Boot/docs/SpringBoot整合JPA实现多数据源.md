@@ -158,6 +158,8 @@ public class JpaBackupDataSourceConfig {
 }
 ```
 
+**注意：** 多数据源时，不同数据的源实现 `JpaRepository` 接口的 dao，放在不同的包，`basePackages` 扫描各自数据源下的包
+
 @EnableJpaRepositories 注解的参数：
 
 - `entityManagerFactoryRef`： 映射 `LocalContainerEntityManagerFactoryBean` 对应的 bean 名称，表示配置连接工厂。
@@ -173,3 +175,78 @@ JPA 自动配置关键的3个Bean:：
 - dataSource
 - entityManagerFactory
 - transactionManager
+
+---
+
+SpringBoot JPA 自动配置的大概源码流程：
+
+`spring-boot-autoconfigure` 自动配置依赖包
+
+- `JpaRepositoriesAutoConfiguration.class` JPA自动配置类
+
+  - `JpaRepositoriesAutoConfigureRegistrar.class`
+
+    - `@EnableJpaRepositories`
+
+  - `HibernateJpaAutoConfiguration.class` -> 父类 `JpaBaseConfiguration.class`
+
+    - `transactionManager()` 注册到容器中
+
+    - `entityManagerFactory()` 注册到容器中
+
+---
+
+## JPA 读写分离
+
+主库包下的 `OrderRepository`
+
+```java
+/**
+ * 主库: 写 repository
+ */
+public interface OrderRepository extends JpaRepository<Order, String>, JpaSpecificationExecutor<Order> {
+}
+```
+
+从库包下的 `BackupOrderRepository`
+
+```java
+/**
+ * 读库 repository
+ */
+public interface BackupOrderRepository extends OrderRepository {
+}
+```
+
+测试：
+
+```java
+@Autowired
+OrderRepository orderRepository;
+
+@Autowired
+@Qualifier("backupOrderRepository")
+OrderRepository backupOrderRepository;
+
+//测试不同的数据源查询
+@Test
+public void testDataSource() {
+    List<Order> all = orderRepository.findAll();
+    System.err.println(all.toString());
+
+    System.err.println("--------------------------------------");
+
+    List<Order> all1 = backupOrderRepository.findAll();
+    System.err.println(all1.toString());
+}
+```
+
+结果：
+
+```yml
+[orderId=1,chanId=1,chanUserId=1,orderType=1,productId=1,amount=1.00,outerOrderId=1]
+
+-------------------------------------------------
+
+[orderId=5,chanId=5,chanUserId=5,orderType=5,productId=5,amount=5.00,outerOrderId=5]
+```
