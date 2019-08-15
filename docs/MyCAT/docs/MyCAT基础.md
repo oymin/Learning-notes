@@ -50,7 +50,7 @@ MyCAT 关键配置文件
 |maxPacketSize|104857600|MySQL最大包的大小|
 |useSqlStat|0|1为开启实时统计、0为关闭|
 |useGlobleTableCheck|0|1为开启全加班一致性检测、0为关闭|
-|subqueryRelationshipCheck|false|子查询中存在关联查询的情况下,检查关联字段中是否有分片字段 .默认false|
+|subqueryRelationshipCheck|false|子查询中存在关联查询的情况下,<br>检查关联字段中是否有分片字段 .默认false|
 |useCompression|1|1为开启mysql压缩协议|
 |fakeMySQLVersion|5.6.20|设置模拟的MySQL版本号|
 
