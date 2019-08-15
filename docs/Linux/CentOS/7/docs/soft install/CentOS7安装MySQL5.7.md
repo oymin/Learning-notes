@@ -2,7 +2,7 @@
 
 ## 1. 卸载
 
-安装前检测是否安装过 mysql，可以选择是否进行卸载
+安装前检测是否安装过 MySQL，可以选择是否进行卸载
 
 #### 1.1 yum 方式
 
@@ -85,7 +85,7 @@ chkconfig --del mysqld
 
 ## 2. 安装MySQL
 
-#### 2.1 获取 mysql yum 源
+#### 2.1 获取 MySQL yum 源
 
 进入 mysql 官网获取 RPM 包下载地址：[https://dev.mysql.com/downloads/repo/yum/](https://dev.mysql.com/downloads/repo/yum/)
 
@@ -98,10 +98,20 @@ wget https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
 #### 2.2 安装软件源
 
 ```css
-sudo rpm -Uvh platform-and-version-specific-package-name.rpm
+sudo rpm -Uvh mysql57-community-release-el7-11.noarch.rpm
 ```
 
+#### 2.3 安装 MySQL 服务端
 
+```css
+yum install -y mysql-community-server
+```
+
+#### 2.4 启动 MySQL 服务
+
+```yml
+systemctl start mysqld
+```
 
 
 
