@@ -10,7 +10,7 @@ MyCAT 关键配置文件
 
 - `server.xml` &emsp;用于配置服务器权限
 
-## 1. server.xml 文件
+## 1. server.xml 配置文件
 
 用于定义系统配置：
 

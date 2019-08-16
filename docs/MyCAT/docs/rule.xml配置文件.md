@@ -190,7 +190,7 @@ DEFAULT_NODE=0
 <function name="sharding-by-prefix-pattern" class="io.mycat.route.function. PartitionByPrefixPattern">
     <!-- 取模基数 -->
     <property name="patternValue">128</property>
-    <!-- 去字符串的长度 -->
+    <!-- 取字符串的长度 -->
     <property name="prefixLength">2</property>
     <property name="mapFile">sharding-by-prefix-pattern.txt</property>
 </function>
