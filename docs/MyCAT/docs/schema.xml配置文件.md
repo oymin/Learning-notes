@@ -66,15 +66,15 @@
 <dataHost name="localhost1" maxCon="1000" minCon="10" balance="0" writeType="0"
         dbType="mysql" dbDriver="native" switchType="1" slaveThreshold="100">
 
-<heartbeat>select user()</heartbeat>
+    <heartbeat>select user()</heartbeat>
 
-<!-- can have multi write hosts -->
-<writeHost host="192.168.1.3" url="192.168.1.3:3306" user="root" password="123456">
-    <!-- can have multi read hosts -->
-    <readHost host="192.168.1.4" url="192.168.1.4:3306" user="root" password="123456" />
-</writeHost>
+    <!-- can have multi write hosts -->
+    <writeHost host="192.168.1.3" url="192.168.1.3:3306" user="root" password="123456">
+        <!-- can have multi read hosts -->
+        <readHost host="192.168.1.4" url="192.168.1.4:3306" user="root" password="123456" />
+    </writeHost>
 
-<writeHost host="192.168.1.4" url="192.168.1.4:3316" user="root" password="123456" />
+    <writeHost host="192.168.1.4" url="192.168.1.4:3316" user="root" password="123456" />
 
 </dataHost>
 ```
@@ -101,7 +101,7 @@
 
 表示如何检查后端数据库是否可用
 
-#### \<writeHost> 与 \<readHost>
+#### \<writeHost> 与 \<readHost> 标签
 
 组合定义一组读写请求访问的数据库实例
 
@@ -109,5 +109,5 @@
 
 - `<readHost>` 定义主从复制集群中的 slave 服务器，负担读任务的数据库，配置在 \<writeHost> 标签内
 
-user 和 password 属性为真是连接后端数据库的账号和密码
+user 和 password 属性为真实连接后端数据库的账号和密码
 

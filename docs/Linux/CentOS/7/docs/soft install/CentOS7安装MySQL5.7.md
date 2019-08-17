@@ -214,13 +214,13 @@ systemctl daemon-reload
 
 #### MySQL 常用指令
 
-```css
+```bash
 开机自动启动：  systemctl enable mysqld
 开机不自动启动：systemctl disable mysqld
-停止服务：      service mysqld stop
-查询状态：      service mysqld status
-启动服务：      service mysqld start
-重启服务：      service mysqld restart
+停止服务：      systemctl stop mysqld.service
+查询状态：      systemctl status mysqld.service
+启动服务：      systemctl start mysqld.service
+重启服务：      systemctl restart mysqld.service
 ```
 
 #### MySQL 安装的目录
@@ -232,6 +232,7 @@ Centos 通过 yum 安装( RPM 分发进行安装) MySQL 的几个默认目录如
 | /usr/bin | 客户端程序和脚本 |
 | /usr/sbin | mysqld服务器 |
 | /var/lib/mysql | 日志文件，数据库文件 |
+| /var/log/mysqld.log | 日志文件 |
 | /usr/share/mysql | 错误消息和字符集文件 |
 | /etc/my.cnf | 配置文件 |
 

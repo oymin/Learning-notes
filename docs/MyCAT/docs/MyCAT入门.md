@@ -122,7 +122,7 @@ source /etc/profile
 
 ```bash
 #切换到 mycat 用户
-su -mycat
+su - mycat
 
 #执行启动脚本 mycat/bin/ 目录下
 startup_nowrap.sh
@@ -164,5 +164,16 @@ wrapper.java.additional.5=-XX:MaxDirectMemorySize=400M
 mycat start
 ```
 
+输出控制台内容：
 
+```bash
+./mycat console
+```
 
+MyCAT 日志路径 `mycat/logs/`
+
+- mycat.log 
+
+- mycat.pid
+
+- wrapper.log 启动日志(启动错误主要查看这个)
