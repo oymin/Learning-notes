@@ -1,4 +1,4 @@
-# GitBash终端中文问乱码解决
+# GitBash终端中文乱码解决
 
 1. 鼠标右键 GitBash 窗口选择 `Optons...` 选项
 
