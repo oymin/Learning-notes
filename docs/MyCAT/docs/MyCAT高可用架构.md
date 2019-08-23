@@ -19,5 +19,3 @@
 - keepalived：保证 Haproxy 的高可用性
 
 
-
-

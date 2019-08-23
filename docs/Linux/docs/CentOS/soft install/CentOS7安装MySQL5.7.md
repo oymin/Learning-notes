@@ -13,7 +13,7 @@ yum list installed mysql*
 
 如或显示了列表，说明系统中有 MySQL：
 
-![image](../../../../images/CentOS/01.png)
+![image](../../../images/CentOS/01.png)
 
 yum 根据列表上的名字卸载：
 

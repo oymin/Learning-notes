@@ -6,7 +6,7 @@ ES 通常以集群方式工作，这样做不仅能够提高 ES 的搜索能力�
 
 下图是 ES 集群结构的示意图：
 
-![image](..\images\02.jpg)
+![image](../images/02.jpg)
 
 从上图总结以下概念：
 
@@ -136,11 +136,11 @@ http.cors.allow‐origin: /.*/
 
 2、创建索引库，共2个分片，每个分片一个副本。
 
-![iamge](..\images\03.jpg)
+![iamge](../images/03.jpg)
 
 3、创建成功，刷新 head:
 
-![iamge](..\images\04.jpg)
+![iamge](../images/04.jpg)
 
 上图可以看到共有4个分片，其中两个分片是副本。
 
@@ -226,7 +226,7 @@ Post http://localhost:9200/xc_course/doc/3
 
 ES 会重新选中一个主结点（前提在配置结点时允许它可以为主结点）
 
-![iamge](..\images\05.jpg)
+![iamge](../images/05.jpg)
 
 此时向活的结点发起搜索请求，仍然正常。
 
@@ -244,7 +244,7 @@ ES 会重新选中一个主结点（前提在配置结点时允许它可以为�
 
 启动结点3，刷新 head，下图显示 ES 将分片分在了3个结点
 
-![iamge](..\images\06.jpg)
+![iamge](../images/06.jpg)
 
 向结点3发起搜索请求：
 

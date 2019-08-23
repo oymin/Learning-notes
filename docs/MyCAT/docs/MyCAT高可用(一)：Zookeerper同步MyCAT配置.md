@@ -8,10 +8,10 @@
 
 | 主机名 | IP | 角色 |
 | ---- | ---- | ---- |
-| Node-128 | 192.168.194.128 | MyCAT, ZK, MySQL |
+| Node-128 | 192.168.194.128 | MyCAT, ZK, MySQL, HAProxy, Keepalived |
 | Node-129 | 192.168.194.129 | ZK, MySQL |
 | Node-130 | 192.168.194.130 | ZK, MySQL |
-| Node-131 | 192.168.194.131 | MyCAT, MySQL |
+| Node-131 | 192.168.194.131 | MyCAT, MySQL, HAProxy, Keepalived |
 
 ```bash
 # 关闭防火墙
