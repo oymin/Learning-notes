@@ -110,12 +110,12 @@ yum install -y mysql-community-server
 #### 2.4 启动 MySQL 服务
 
 ```css
-systemctl start mysqld
+systemctl start mysqld.service
 ```
 
 ## 3. 登录 MySQL
 
-#### 3.1 获取 MySQL 临时密码
+### 3.1 获取 MySQL 临时密码
 
 MySQL5.7 为 root 用户随机生成了一个密码，在 error log 中，关于 error log 的位置，如果安装的是 RPM 包，则默认是 `/var/log/mysqld.log`
 
@@ -135,7 +135,7 @@ grep 'temporary password' /var/log/mysqld.log
 mysql -u root -p i?AfoKQrH9te
 ```
 
-#### 3.2 修改登录密码
+### 3.2 修改登录密码
 
 MySQL 5.7默认密码策略要求密码必须是大小写字母数字特殊字母的组合，至少8位
 
@@ -155,12 +155,12 @@ set global validate_password_length=1;
 ALTER USER 'root'@'localhost' IDENTIFIED BY '123456';
 ```
 
-#### 3.3 授权其它机器登录
+### 3.3 授权其它机器登录
 
 MySQL 默认不允许远程登录，执行以下命令允许远程登录
 
 ```css
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '自己的密码' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '123456' WITH GRANT OPTION;
 
 FLUSH  PRIVILEGES;
 ```
@@ -168,7 +168,7 @@ FLUSH  PRIVILEGES;
 > **注意：**  
 > 如果防火墙没有开放 3306 端口，需要设置防火墙开放 3306 端口
 
-#### 3.4 配置默认编码为 utf8
+### 3.4 配置默认编码为 utf8
 
 ```css
 character_set_server=utf8
@@ -200,7 +200,7 @@ mysql> show variables like '%character%';
 8 rows in set (0.01 sec)
 ```
 
-#### 3.5 设置开机启动
+### 3.5 设置开机启动
 
 ```css
 systemctl enable mysqld
@@ -212,7 +212,7 @@ systemctl daemon-reload
 
 ## 4. MySQL 相关
 
-#### MySQL 常用指令
+### MySQL 常用指令
 
 ```bash
 开机自动启动：  systemctl enable mysqld
@@ -223,7 +223,7 @@ systemctl daemon-reload
 重启服务：      systemctl restart mysqld.service
 ```
 
-#### MySQL 安装的目录
+### MySQL 安装的目录
 
 Centos 通过 yum 安装( RPM 分发进行安装) MySQL 的几个默认目录如下：
 

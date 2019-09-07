@@ -22,19 +22,39 @@ ActiveMQ，RabbitMQ，ZeroMQ，Kafka，MetaMQ，RocketMQ、Redis。
 
 1、使得简单，功能强大。
 
-2、基于AMQP协议。
+2、基于 AMQP 协议。
 
 3、社区活跃，文档完善。
 
-4、高并发性能好，这主要得益于Erlang语言。
+4、高并发性能好，这主要得益于 Erlang 语言。
 
-5、SpringBoot默认已集成RabbitMQ
+5、SpringBoot 默认已集成 RabbitMQ
 
 ## 2. 相关知识介绍
 
 ### AMQP是什么？
 
 AMQP，即 Advanced Message Queuing Protocol,一个提供统一消息服务的应用层标准高级消息队列协议,是应用层协议的一个开放标准,为面向消息的中间件设计。基于此协议的客户端与消息中间件可传递消息，并不受客户端/中间件不同产品，不同的开发语言等条件的限制。Erlang 中的实现有 RabbitMQ 等。
+
+### AMQP核心概念
+
+**Server：** 又称 Broker，接收客户端的连接，实现 AMQP 实体服务
+
+**Connection：** 连接应用程序与 Broker 的网络连接
+
+**Channel：** 网络信道，几乎所有的操作都在 Channel 中进行，Channel 是进行消息读写的通道。客户端可建立多个 Channel，每个 Channel 代表一个会话任务
+
+**Message：** 消息，服务器和应用程序之间传送的数据，由 Properties 和 Body 组成。Properties 可以对消息进行修饰，比如消息的优先级、延迟等高级特性；Body 则就是消息体内容
+
+**Virtual Host：** 虚拟地址，用于进行逻辑隔离，最上层的消息路由。一个 Virtual Host 里面可以由若干个 Exchange 和 Queue，同一个 Virtual Host 里面不能由相同名称的 Exchange 或 Queue
+
+**Exchange：** 交换机，接收消息，根据路由键转发消息到绑定的队列
+
+**Binding：** Exchang 和 Queue 之间的虚拟连接，Binding 中可以包含 routing key
+
+**Routing key：** 一个路由规则，虚拟机可用它来确定如何路由一个特定消息
+
+**Queue：** 也成为 Message Queue，消息队列，保存消息并将他们转发给消费者
 
 ### JMS是什么？
 
@@ -50,15 +70,15 @@ JMS 是一种与厂商无关的 API，用来访问收发系统消息，它类似
 
 ### 组成部分说明如下：
 
-- Broker：消息队列服务进程，此进程包括两个部分：Exchange和Queue。
+- Broker：消息队列服务进程，此进程包括两个部分：Exchange 和 Queue。
 
 - Exchange：消息队列交换机，按一定的规则将消息路由转发到某个队列，对消息进行过虑。
 
 - Queue：消息队列，存储消息的队列，消息到达队列并转发给指定的消费方。
 
-- Producer：消息生产者，即生产方客户端，生产方客户端将消息发送到MQ。
+- Producer：消息生产者，即生产方客户端，生产方客户端将消息发送到 MQ。
 
-- Consumer：消息消费者，即消费方客户端，接收MQ转发的消息。
+- Consumer：消息消费者，即消费方客户端，接收 MQ 转发的消息。
 
 ### 消息发布接收流程：
 

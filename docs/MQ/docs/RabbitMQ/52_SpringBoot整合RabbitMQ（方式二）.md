@@ -105,11 +105,14 @@ spring.rabbitmq.port=5672
 spring.rabbitmq.username=guest
 spring.rabbitmq.password=guest
 
+#保证RabbitMqTemplate的监听有效
+#spring.rabbitmq.template.mandatory=true
+
 #rabbitmq开启消息回调
 #spring.rabbitmq.publisher-confirms=true
 #spring.rabbitmq.publisher-returns=true
 
-#rabbitmq开启消息确认
+#rabbitmq开启消息手动确认
 #spring.rabbitmq.listener.simple.acknowledge-mode=manual
 #spring.rabbitmq.listener.direct.acknowledge-mode=manual
 
