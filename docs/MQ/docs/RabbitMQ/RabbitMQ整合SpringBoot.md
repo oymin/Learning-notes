@@ -23,7 +23,7 @@ spring.rabbitmq.publisher-returns=true
 spring.rabbitmq.template.mandatory=true
 ```
 
-注意一点❗：在发送消息的是否对 template 进行配置 mandatory=true 保证监听有效
+注意一点❗：在发送消息的时候对 template 进行配置 mandatory=true 保证监听有效
 
 ### rabbitTemplate 回调函数
 

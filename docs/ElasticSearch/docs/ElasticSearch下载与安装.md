@@ -35,7 +35,7 @@
 
 #### 三个配置文件
 
-`elasticsearch.yml：` 用于配置 Elasticsearch 运行参数 
+`elasticsearch.yml：` 用于配置 Elasticsearch 运行参数
 
 `jvm.options：` 用于配置 Elasticsearch JVM 设置
 
@@ -148,8 +148,6 @@ su elasticsearch
 ```bash
 elasticsearch ‐ nofile 65536
 ```
-
-
 
 
 

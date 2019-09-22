@@ -6,22 +6,22 @@
 
 ```xml
 <dependency>
-        <groupId>org.elasticsearch.client</groupId>
-        <artifactId>elasticsearch-rest-high-level-client</artifactId>
-        <version>6.4.1</version>
-    </dependency>
+    <groupId>org.elasticsearch.client</groupId>
+    <artifactId>elasticsearch-rest-high-level-client</artifactId>
+    <version>6.4.1</version>
+</dependency>
 
-    <dependency>
-        <groupId>org.elasticsearch.client</groupId>
-        <artifactId>elasticsearch-rest-client</artifactId>
-        <version>6.4.1</version>
-    </dependency>
+<dependency>
+    <groupId>org.elasticsearch.client</groupId>
+    <artifactId>elasticsearch-rest-client</artifactId>
+    <version>6.4.1</version>
+</dependency>
 
-    <dependency>
-        <groupId>org.elasticsearch</groupId>
-        <artifactId>elasticsearch</artifactId>
-        <version>6.4.1</version>
-    </dependency>
+<dependency>
+    <groupId>org.elasticsearch</groupId>
+    <artifactId>elasticsearch</artifactId>
+    <version>6.4.1</version>
+</dependency>
 ```
 
 ### 1.2 application.yml
@@ -501,7 +501,74 @@ public class TestDSL {
 }
 ```
 
+## DSL 聚合搜索
 
+```java
+import org.elasticsearch.search.aggregations.Aggregation;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogramInterval;
+import org.elasticsearch.search.aggregations.bucket.histogram.Histogram;
+import org.elasticsearch.search.aggregations.bucket.terms.ParsedStringTerms;
+import org.elasticsearch.search.aggregations.bucket.terms.Terms;
+import org.elasticsearch.search.aggregations.metrics.avg.Avg;
+
+/**
+* 聚合查询：
+* （1）首先按照country国家来进行分组
+* （2）然后在每个country分组内，再按照入职年限进行分组
+* （3）最后计算每个分组内的平均薪资
+*/
+@Test
+public void testSearch2() throws IOException {
+    SearchRequest searchRequest = new SearchRequest("index2");
+    SearchSourceBuilder queryBuilder = new SearchSourceBuilder();
+    queryBuilder.aggregation(
+            AggregationBuilders.terms("by_country").field("country")
+                    .subAggregation(
+                            AggregationBuilders.dateHistogram("by_year").field("join_date").dateHistogramInterval(DateHistogramInterval.YEAR)
+                                    .subAggregation(AggregationBuilders.avg("avg_salary").field("salary"))
+                    )
+    );
+    searchRequest.source(queryBuilder);
+
+    SearchResponse response = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+    final Map<String, Aggregation> map = response.getAggregations().asMap();
+    ParsedStringTerms by_country = (ParsedStringTerms) map.get("by_country");
+    final Iterator<? extends Terms.Bucket> iterator = by_country.getBuckets().iterator();
+    while (iterator.hasNext()) {
+        //获取根据 country 的分组
+        final Terms.Bucket country = iterator.next();
+        System.err.println("country : " + country.getKey() + " = " + country.getDocCount());
+
+        //获取根据 country 分组里的 根据 时间的分组
+        Histogram by_year = (Histogram) country.getAggregations().asMap().get("by_year");
+        final Iterator<? extends Histogram.Bucket> iter = by_year.getBuckets().iterator();
+        while (iter.hasNext()) {
+            final Histogram.Bucket year = iter.next();
+            System.err.println("date : " + year.getKey() + " = " + year.getDocCount());
+
+            //获取根据年分组的 平均 salary 的值
+            Avg avg = (Avg) year.getAggregations().asMap().get("avg_salary");
+            System.err.println("avg_salary = " + avg.getValue());
+        }
+    }
+
+}
+```
+
+输出结果：
+
+```text
+country : china = 2
+date : 2017-01-01T00:00:00.000Z = 2
+avg_salary = 11000.0
+
+country : usa = 2
+date : 2015-01-01T00:00:00.000Z = 1
+avg_salary = 23000.0
+date : 2016-01-01T00:00:00.000Z = 1
+avg_salary = 23000.0
+```
 
 
 
